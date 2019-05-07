@@ -1,3 +1,4 @@
+#include <iostream>
 #include "croco/Index.h"
 
 namespace croco
@@ -123,6 +124,8 @@ void Index::exportIndex()
 void Index::getObjectString(std::string* output)
 {
     _objectSpace.SerializeToString(output);
+
+    std::cout << "Size::" << output->size() << "\n";
 }
 
 /**
@@ -165,7 +168,7 @@ void Index::getInternalNodeString(std::string* output)
  * Set Object string
  *
  * @access public
- * @param std::string *output
+ * @param std::string& data
  * @return void
  */
 void Index::setObjectString(const std::string& data)
@@ -177,7 +180,7 @@ void Index::setObjectString(const std::string& data)
  * Set Distance string
  *
  * @access public
- * @param std::string *output
+ * @param std::string& data
  * @return void
  */
 void Index::setDistanceString(const std::string& data)
@@ -189,7 +192,7 @@ void Index::setDistanceString(const std::string& data)
  * Set LeafNode string
  *
  * @access public
- * @param std::string *output
+ * @param std::string& data
  * @return void
  */
 void Index::setLeafNodeString(const std::string& data)
@@ -201,7 +204,7 @@ void Index::setLeafNodeString(const std::string& data)
  * Set InternalNode string
  *
  * @access public
- * @param std::string *output
+ * @param std::string& data
  * @return void
  */
 void Index::setInternalNodeString(const std::string& data)
@@ -213,7 +216,7 @@ void Index::setInternalNodeString(const std::string& data)
  * Add Object string
  *
  * @access public
- * @param std::string *output
+ * @param std::string& data
  * @return void
  */
 void Index::addObjectString(const std::string& data)
@@ -228,7 +231,7 @@ void Index::addObjectString(const std::string& data)
  * Add Distance string
  *
  * @access public
- * @param std::string *output
+ * @param std::string& data
  * @return void
  */
 void Index::addDistanceString(const std::string& data)
@@ -243,7 +246,7 @@ void Index::addDistanceString(const std::string& data)
  * Add LeafNode string
  *
  * @access public
- * @param std::string *output
+ * @param std::string& data
  * @return void
  */
 void Index::addLeafNodeString(const std::string& data)
@@ -258,7 +261,7 @@ void Index::addLeafNodeString(const std::string& data)
  * Add InternalNode string
  *
  * @access public
- * @param std::string *output
+ * @param std::string& data
  * @return void
  */
 void Index::addInternalNodeString(const std::string& data)
@@ -278,14 +281,22 @@ void Index::addInternalNodeString(const std::string& data)
 void Index::importIndex()
 {
     /* obj */
-    _importObject();
+    if (0 != _objectSpace.objects_size()) {
+        _importObject();
+    }
 
     /* grp */
-    _importDistance();
+    if (0 != _distanceSpace.distances_size()) {
+        _importDistance();
+    }
 
     /* tre */
-    _importLeafNode();
-    _importInternalNode();
+    if (0 != _leafNodeSpace.nodes_size()) {
+        _importLeafNode();
+    }
+    if (0 != _internalNodeSpace.nodes_size()) {
+        _importInternalNode();
+    }
 }
 
 /**

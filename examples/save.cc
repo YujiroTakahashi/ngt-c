@@ -73,13 +73,34 @@ int main(int argc, char **argv)
     croco::Index index;
     index.create(300);
 
-
     index.batchInsert(data);
     index.batchInsert(query);
 
-    std::vector<std::pair<int, float>> res = index.search(query, 5);
-    for (const auto& row : res) {
-        std::cout << row.first << ":" << row.second << "\n";
+
+    index.exportIndex();
+    {
+        std::ofstream ostrm("index/obj.dat", std::ios::binary);
+        std::string output;
+        index.getObjectString(&output);
+        ostrm.write(output.c_str(), output.size());
+    }
+    {
+        std::ofstream ostrm("index/dist.dat", std::ios::binary);
+        std::string output;
+        index.getDistanceString(&output);
+        ostrm.write(output.c_str(), output.size());
+    }
+    {
+        std::ofstream ostrm("index/leaf.dat", std::ios::binary);
+        std::string output;
+        index.getLeafNodeString(&output);
+        ostrm.write(output.c_str(), output.size());
+    }
+    {
+        std::ofstream ostrm("index/internal.dat", std::ios::binary);
+        std::string output;
+        index.getInternalNodeString(&output);
+        ostrm.write(output.c_str(), output.size());
     }
 
     return 0;
