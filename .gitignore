@@ -1,5 +1,8 @@
 .vscode
 build
 examples/c_ngt
+examples/c_open
 examples/cc_ngt
+examples/open_ngt
+examples/save_ngt
 examples/index/*.dat

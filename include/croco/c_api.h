@@ -55,14 +55,14 @@ NGT_API NGTStr NgtGetObjectString(NgtHandle handle);
 NGT_API NGTStr NgtGetDistanceString(NgtHandle handle);
 NGT_API NGTStr NgtGetLeafNodeString(NgtHandle handle);
 NGT_API NGTStr NgtGetInternalNodeString(NgtHandle handle);
-NGT_API void NgtSetObjectString(NgtHandle handle, const char* data);
-NGT_API void NgtSetDistanceString(NgtHandle handle, const char* data);
-NGT_API void NgtSetLeafNodeString(NgtHandle handle, const char* data);
-NGT_API void NgtSetInternalNodeString(NgtHandle handle, const char* data);
-NGT_API void NgtAddObjectString(NgtHandle handle, const char* data);
-NGT_API void NgtAddDistanceString(NgtHandle handle, const char* data);
-NGT_API void NgtAddLeafNodeString(NgtHandle handle, const char* data);
-NGT_API void NgtAddInternalNodeString(NgtHandle handle, const char* data);
+NGT_API void NgtSetObjectString(NgtHandle handle, const uint8_t* data, size_t len);
+NGT_API void NgtSetDistanceString(NgtHandle handle, const uint8_t* data, size_t len);
+NGT_API void NgtSetLeafNodeString(NgtHandle handle, const uint8_t* data, size_t len);
+NGT_API void NgtSetInternalNodeString(NgtHandle handle, const uint8_t* data, size_t len);
+NGT_API void NgtAddObjectData(NgtHandle handle, const uint8_t* data, size_t size);
+NGT_API void NgtAddDistanceData(NgtHandle handle, const uint8_t* data, size_t size);
+NGT_API void NgtAddLeafNodeData(NgtHandle handle, const uint8_t* data, size_t size);
+NGT_API void NgtAddInternalNodeData(NgtHandle handle, const uint8_t* data, size_t size);
 NGT_API void NgtImportIndex(NgtHandle handle);
 
 NGT_API void NgtInsert(

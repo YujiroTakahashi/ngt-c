@@ -124,8 +124,6 @@ void Index::exportIndex()
 void Index::getObjectString(std::string* output)
 {
     _objectSpace.SerializeToString(output);
-
-    std::cout << "Size::" << output->size() << "\n";
 }
 
 /**
@@ -219,10 +217,10 @@ void Index::setInternalNodeString(const std::string& data)
  * @param std::string& data
  * @return void
  */
-void Index::addObjectString(const std::string& data)
+void Index::addObjectData(const uint8_t *data, size_t size)
 {
     google::protobuf::io::CodedInputStream input_stream(
-        reinterpret_cast<const ::google::protobuf::uint8*>(data.data()), data.size()
+        reinterpret_cast<const ::google::protobuf::uint8*>(data), size
     );
     _objectSpace.MergeFromCodedStream(&input_stream);
 }
@@ -234,10 +232,10 @@ void Index::addObjectString(const std::string& data)
  * @param std::string& data
  * @return void
  */
-void Index::addDistanceString(const std::string& data)
+void Index::addDistanceData(const uint8_t *data, size_t size)
 {
     google::protobuf::io::CodedInputStream input_stream(
-        reinterpret_cast<const ::google::protobuf::uint8*>(data.data()), data.size()
+        reinterpret_cast<const ::google::protobuf::uint8*>(data), size
     );
     _distanceSpace.MergeFromCodedStream(&input_stream);
 }
@@ -249,10 +247,10 @@ void Index::addDistanceString(const std::string& data)
  * @param std::string& data
  * @return void
  */
-void Index::addLeafNodeString(const std::string& data)
+void Index::addLeafNodeData(const uint8_t *data, size_t size)
 {
     google::protobuf::io::CodedInputStream input_stream(
-        reinterpret_cast<const ::google::protobuf::uint8*>(data.data()), data.size()
+        reinterpret_cast<const ::google::protobuf::uint8*>(data), size
     );
     _leafNodeSpace.MergeFromCodedStream(&input_stream);
 }
@@ -264,10 +262,10 @@ void Index::addLeafNodeString(const std::string& data)
  * @param std::string& data
  * @return void
  */
-void Index::addInternalNodeString(const std::string& data)
+void Index::addInternalNodeData(const uint8_t *data, size_t size)
 {
     google::protobuf::io::CodedInputStream input_stream(
-        reinterpret_cast<const ::google::protobuf::uint8*>(data.data()), data.size()
+        reinterpret_cast<const ::google::protobuf::uint8*>(data), size
     );
     _internalNodeSpace.MergeFromCodedStream(&input_stream);
 }

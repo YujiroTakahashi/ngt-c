@@ -226,11 +226,11 @@ NGTStr NgtGetInternalNodeString(NgtHandle handle)
  * @access public
  * @return int
  */
-void NgtSetObjectString(NgtHandle handle, const char* data)
+void NgtSetObjectString(NgtHandle handle, const uint8_t* data, size_t len)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string strdata(data);
+    std::string strdata(reinterpret_cast<const char *>(data), len);
     index->setObjectString(strdata);
 }
 
@@ -240,11 +240,11 @@ void NgtSetObjectString(NgtHandle handle, const char* data)
  * @access public
  * @return int
  */
-void NgtSetDistanceString(NgtHandle handle, const char* data)
+void NgtSetDistanceString(NgtHandle handle, const uint8_t* data, size_t len)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string strdata(data);
+    std::string strdata(reinterpret_cast<const char *>(data), len);
     index->setDistanceString(strdata);
 }
 
@@ -254,11 +254,11 @@ void NgtSetDistanceString(NgtHandle handle, const char* data)
  * @access public
  * @return int
  */
-void NgtSetLeafNodeString(NgtHandle handle, const char* data)
+void NgtSetLeafNodeString(NgtHandle handle, const uint8_t* data, size_t len)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string strdata(data);
+    std::string strdata(reinterpret_cast<const char *>(data), len);
     index->setLeafNodeString(strdata);
 }
 
@@ -268,11 +268,11 @@ void NgtSetLeafNodeString(NgtHandle handle, const char* data)
  * @access public
  * @return int
  */
-void NgtSetInternalNodeString(NgtHandle handle, const char* data)
+void NgtSetInternalNodeString(NgtHandle handle, const uint8_t* data, size_t len)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string strdata(data);
+    std::string strdata(reinterpret_cast<const char *>(data), len);
     index->setInternalNodeString(strdata);
 }
 
@@ -282,12 +282,11 @@ void NgtSetInternalNodeString(NgtHandle handle, const char* data)
  * @access public
  * @return int
  */
-void NgtAddObjectString(NgtHandle handle, const char* data)
+void NgtAddObjectData(NgtHandle handle, const uint8_t* data, size_t size)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string strdata(data);
-    index->addObjectString(strdata);
+    index->addObjectData(data, size);
 }
 
 /**
@@ -296,12 +295,11 @@ void NgtAddObjectString(NgtHandle handle, const char* data)
  * @access public
  * @return int
  */
-void NgtAddDistanceString(NgtHandle handle, const char* data)
+void NgtAddDistanceData(NgtHandle handle, const uint8_t* data, size_t size)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string strdata(data);
-    index->addDistanceString(strdata);
+    index->addDistanceData(data, size);
 }
 
 /**
@@ -310,12 +308,11 @@ void NgtAddDistanceString(NgtHandle handle, const char* data)
  * @access public
  * @return int
  */
-void NgtAddLeafNodeString(NgtHandle handle, const char* data)
+void NgtAddLeafNodeData(NgtHandle handle, const uint8_t* data, size_t size)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string strdata(data);
-    index->addLeafNodeString(strdata);
+    index->addLeafNodeData(data, size);
 }
 
 /**
@@ -324,12 +321,11 @@ void NgtAddLeafNodeString(NgtHandle handle, const char* data)
  * @access public
  * @return int
  */
-void NgtAddInternalNodeString(NgtHandle handle, const char* data)
+void NgtAddInternalNodeData(NgtHandle handle, const uint8_t* data, size_t size)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string strdata(data);
-    index->addInternalNodeString(strdata);
+    index->addInternalNodeData(data, size);
 }
 
 /**

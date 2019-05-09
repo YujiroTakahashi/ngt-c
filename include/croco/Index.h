@@ -37,10 +37,10 @@ public:
     void setDistanceString(const std::string& data);
     void setLeafNodeString(const std::string& data);
     void setInternalNodeString(const std::string& data);
-    void addObjectString(const std::string& data);
-    void addDistanceString(const std::string& data);
-    void addLeafNodeString(const std::string& data);
-    void addInternalNodeString(const std::string& data);
+    void addObjectData(const uint8_t *data, size_t size);
+    void addDistanceData(const uint8_t *data, size_t size);
+    void addLeafNodeData(const uint8_t *data, size_t size);
+    void addInternalNodeData(const uint8_t *data, size_t size);
     void importIndex();
     void batchInsert(std::vector<float> data, std::size_t objectCount = 1, std::size_t numThreads = 8);
     int insert(std::vector<float> data);
