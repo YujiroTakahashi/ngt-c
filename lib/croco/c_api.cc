@@ -2,7 +2,7 @@
 #include "croco/c_api.h"
 
 /**
- * get croco::NGT::Index version
+ * Get croco::NGT::Index version
  *
  * @access public
  * @return int
@@ -13,7 +13,7 @@ int NgtVersion()
 }
 
 /**
- * get croco::NGT::Index size
+ * Get croco::NGT::Index size
  *
  * @access public
  * @return int
@@ -24,7 +24,7 @@ int NgtSize()
 }
 
 /**
- * create a croco::NGT::Index handle
+ * Create a croco::NGT::Index handle
  *
  * @access public
  * @return NgtHandle
@@ -36,7 +36,7 @@ NgtHandle NgtCreate()
 }
 
 /**
- * free a croco::NGT::Index handle
+ * Free a croco::NGT::Index handle
  *
  * @access public
  * @param  NgtHandle handle
@@ -48,7 +48,7 @@ void NgtFree(NgtHandle handle)
 }
 
 /**
- * free a NgtStr handle
+ * Free a NgtStr handle
  *
  * @access public
  * @param  NgtStr str
@@ -100,6 +100,7 @@ void NgtCreateDB(
  * Is empty index
  *
  * @access public
+ * @param  NgtHandle handle
  * @return int
  */
 int NgtEmptyIndex(NgtHandle handle)
@@ -113,9 +114,10 @@ int NgtEmptyIndex(NgtHandle handle)
 }
 
 /**
- * get dimension
+ * Get dimension
  *
  * @access public
+ * @param  NgtHandle handle
  * @return int
  */
 int NgtGetDimension(NgtHandle handle)
@@ -125,10 +127,11 @@ int NgtGetDimension(NgtHandle handle)
 }
 
 /**
- * 
+ * Export index
  *
  * @access public
- * @return int
+ * @param  NgtHandle handle
+ * @return void
  */
 void NgtExportIndex(NgtHandle handle)
 {
@@ -137,10 +140,11 @@ void NgtExportIndex(NgtHandle handle)
 }
 
 /**
- * 
+ * Get binary string of leaf node structure.
  *
  * @access public
- * @return int
+ * @param  NgtHandle handle
+ * @return NGTStr
  */
 NGTStr NgtGetObjectString(NgtHandle handle)
 {
@@ -158,10 +162,11 @@ NGTStr NgtGetObjectString(NgtHandle handle)
 }
 
 /**
- * 
+ * Get binary string of distance structure.
  *
  * @access public
- * @return int
+ * @param  NgtHandle handle
+ * @return NGTStr
  */
 NGTStr NgtGetDistanceString(NgtHandle handle)
 {
@@ -179,10 +184,11 @@ NGTStr NgtGetDistanceString(NgtHandle handle)
 }
 
 /**
- * 
+ * Get binary string of leaf node structure.
  *
  * @access public
- * @return int
+ * @param  NgtHandle handle
+ * @return NGTStr
  */
 NGTStr NgtGetLeafNodeString(NgtHandle handle)
 {
@@ -200,10 +206,11 @@ NGTStr NgtGetLeafNodeString(NgtHandle handle)
 }
 
 /**
- * 
+ * Get binary string of internal node structure.
  *
  * @access public
- * @return int
+ * @param  NgtHandle handle
+ * @return NGTStr
  */
 NGTStr NgtGetInternalNodeString(NgtHandle handle)
 {
@@ -221,66 +228,81 @@ NGTStr NgtGetInternalNodeString(NgtHandle handle)
 }
 
 /**
- * 
+ * Set binary data of object structure.
  *
  * @access public
- * @return int
+ * @param  NgtHandle handle
+ * @param  const uint8_t* data
+ * @param  size_t size
+ * @return void
  */
-void NgtSetObjectString(NgtHandle handle, const uint8_t* data, size_t len)
+void NgtSetObjectData(NgtHandle handle, const uint8_t* data, size_t size)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string strdata(reinterpret_cast<const char *>(data), len);
+    std::string strdata(reinterpret_cast<const char *>(data), size);
     index->setObjectString(strdata);
 }
 
 /**
- * 
+ * Set binary data of distance structure.
  *
  * @access public
- * @return int
+ * @param  NgtHandle handle
+ * @param  const uint8_t* data
+ * @param  size_t size
+ * @return void
  */
-void NgtSetDistanceString(NgtHandle handle, const uint8_t* data, size_t len)
+void NgtSetDistanceData(NgtHandle handle, const uint8_t* data, size_t size)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string strdata(reinterpret_cast<const char *>(data), len);
+    std::string strdata(reinterpret_cast<const char *>(data), size);
     index->setDistanceString(strdata);
 }
 
 /**
- * 
+ * Set binary data of leaf node structure.
  *
  * @access public
- * @return int
+ * @param  NgtHandle handle
+ * @param  const uint8_t* data
+ * @param  size_t size
+ * @return void
  */
-void NgtSetLeafNodeString(NgtHandle handle, const uint8_t* data, size_t len)
+void NgtSetLeafNodeData(NgtHandle handle, const uint8_t* data, size_t size)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string strdata(reinterpret_cast<const char *>(data), len);
+    std::string strdata(reinterpret_cast<const char *>(data), size);
     index->setLeafNodeString(strdata);
 }
 
 /**
- * 
+ * Set binary data of internal node structure.
  *
  * @access public
- * @return int
+ * @param  NgtHandle handle
+ * @param  const uint8_t* data
+ * @param  size_t size
+ * @return void
  */
-void NgtSetInternalNodeString(NgtHandle handle, const uint8_t* data, size_t len)
+void NgtSetInternalNodeData(NgtHandle handle, const uint8_t* data, size_t size)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string strdata(reinterpret_cast<const char *>(data), len);
+    std::string strdata(reinterpret_cast<const char *>(data), size);
     index->setInternalNodeString(strdata);
 }
 
 /**
- * 
+ * Add binary data of object structure.
  *
  * @access public
- * @return int
+ * @param  NgtHandle handle
+ * @param  const uint8_t* data
+ * @param  size_t size
+ * @return void
  */
 void NgtAddObjectData(NgtHandle handle, const uint8_t* data, size_t size)
 {
@@ -290,10 +312,13 @@ void NgtAddObjectData(NgtHandle handle, const uint8_t* data, size_t size)
 }
 
 /**
- * 
+ * Add binary data of distance structure.
  *
  * @access public
- * @return int
+ * @param  NgtHandle handle
+ * @param  const uint8_t* data
+ * @param  size_t size
+ * @return void
  */
 void NgtAddDistanceData(NgtHandle handle, const uint8_t* data, size_t size)
 {
@@ -303,10 +328,13 @@ void NgtAddDistanceData(NgtHandle handle, const uint8_t* data, size_t size)
 }
 
 /**
- * 
+ * Add binary data of leaf node structure.
  *
  * @access public
- * @return int
+ * @param  NgtHandle handle
+ * @param  const uint8_t* data
+ * @param  size_t size
+ * @return void
  */
 void NgtAddLeafNodeData(NgtHandle handle, const uint8_t* data, size_t size)
 {
@@ -316,10 +344,13 @@ void NgtAddLeafNodeData(NgtHandle handle, const uint8_t* data, size_t size)
 }
 
 /**
- * 
+ * Add binary data of internal node structure.
  *
  * @access public
- * @return int
+ * @param  NgtHandle handle
+ * @param  const uint8_t* data
+ * @param  size_t size
+ * @return void
  */
 void NgtAddInternalNodeData(NgtHandle handle, const uint8_t* data, size_t size)
 {
@@ -329,10 +360,11 @@ void NgtAddInternalNodeData(NgtHandle handle, const uint8_t* data, size_t size)
 }
 
 /**
- * 
+ * Import index
  *
  * @access public
- * @return int
+ * @param  NgtHandle handle
+ * @return void
  */
 void NgtImportIndex(NgtHandle handle)
 {
