@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-option optimize_for = LITE_RUNTIME;
-
 package croco;
 
 message Object {
@@ -29,8 +27,8 @@ message LeafNodeSpace {
     message LeafNode {
         uint32 id = 1;
         uint32 parent = 2;
-        repeated Distance distances = 4;
-        repeated uint32 pivot = 3;
+        repeated Distance distances = 3;
+        repeated uint32 pivot = 4;
     }
     repeated LeafNode nodes = 1;
 }

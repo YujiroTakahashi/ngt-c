@@ -40,26 +40,26 @@ int main(int argc, char **argv)
     {
         int size;
         uint8_t *input = getData("index/obj.dat", &size);
-        NgtSetObjectString(index, input, size);
+        NgtSetObjectData(index, input, size);
         free(input);
     }
     {
         int size;
         uint8_t *input = getData("index/dist.dat", &size);
-        NgtSetDistanceString(index, input, size);
+        NgtSetDistanceData(index, input, size);
         free(input);
     }
     {
         int size;
         uint8_t *input = getData("index/leaf.dat", &size);
-        NgtSetLeafNodeString(index, input, size);
+        NgtSetLeafNodeData(index, input, size);
         free(input);
     }
 #if 1
     {
         int size;
         uint8_t *input = getData("index/internal.dat", &size);
-        NgtSetLeafNodeString(index, input, size);
+        NgtSetLeafNodeData(index, input, size);
         free(input);
     }
 #endif

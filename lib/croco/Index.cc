@@ -1,8 +1,18 @@
 #include <iostream>
+#include <google/protobuf/message.h>
+#include <google/protobuf/util/json_util.h>
+
+#include "json.hpp"
 #include "croco/Index.h"
 
 namespace croco
 {
+
+struct membuf : std::streambuf {
+    membuf(char* base, std::size_t n) {
+        this->setg(base, base, base + n);
+    }
+};
 
 /**
  * Create databse
@@ -118,12 +128,73 @@ void Index::exportIndex()
  * Get Object string
  *
  * @access public
+ * @return 
+ */
+std::string Index::getObjectString()
+{
+    std::string output;
+    _objectSpace.SerializeToString(&output);
+    return output;
+}
+
+/**
+ * Get Distance string
+ *
+ * @access public
+ * @return std::string
+ */
+std::string Index::getDistanceString()
+{
+    std::string output;
+    _distanceSpace.SerializeToString(&output);
+    return output;
+}
+
+/**
+ * Get LeafNode string
+ *
+ * @access public
+ * @return std::string
+ */
+std::string Index::getLeafNodeString()
+{
+    std::string output;
+    _leafNodeSpace.SerializeToString(&output);
+    return output;
+}
+
+/**
+ * Get InternalNode string
+ *
+ * @access public
+ * @return std::string
+ */
+std::string Index::getInternalNodeString()
+{
+    std::string output;
+    _internalNodeSpace.SerializeToString(&output);
+    return output;
+}
+
+/**
+ * Get Object string
+ *
+ * @access public
  * @param std::string *output
  * @return void
  */
-void Index::getObjectString(std::string* output)
+std::string Index::getObjectJson()
 {
-    _objectSpace.SerializeToString(output);
+    nlohmann::json retj;
+
+    for (int i = 0; i < _objectSpace.objects_size(); i++) {
+        const croco::Object &grain = _objectSpace.objects(i);
+        for (int idx = 0; idx < grain.members_size(); idx++) {
+            retj[i][idx] = (uint32_t)grain.members(idx);
+        }
+    } // for (int i = 0; i < _objectSpace.objects_size(); i++)
+
+    return retj.dump();
 }
 
 /**
@@ -133,9 +204,21 @@ void Index::getObjectString(std::string* output)
  * @param std::string *output
  * @return void
  */
-void Index::getDistanceString(std::string* output)
+std::string Index::getDistanceJson()
 {
-    _distanceSpace.SerializeToString(output);
+    nlohmann::json retj;
+
+    for (int i = 0; i < _distanceSpace.distances_size(); i++) {
+        auto &grain = _distanceSpace.distances(i);
+        for (int idx = 0; idx < grain.members_size(); idx++) {
+            auto &distance = grain.members(idx);
+
+            retj[i][idx]["id"]       = distance.id();
+            retj[i][idx]["distance"] = distance.distance();
+        }
+    } // for (int i = 0; i < _distanceSpace.distances_size(); i++)
+
+    return retj.dump();
 }
 
 /**
@@ -145,9 +228,28 @@ void Index::getDistanceString(std::string* output)
  * @param std::string *output
  * @return void
  */
-void Index::getLeafNodeString(std::string* output)
+std::string Index::getLeafNodeJson()
 {
-    _leafNodeSpace.SerializeToString(output);
+    nlohmann::json retj;
+
+    for (int i = 0; i < _leafNodeSpace.nodes_size(); i++) {
+        const croco::LeafNodeSpace::LeafNode &lNode = _leafNodeSpace.nodes(i);
+
+        retj[i]["id"]     = lNode.id();
+        retj[i]["parent"] = lNode.parent();
+
+        for (int idx = 0; idx < lNode.distances_size(); idx++) {
+            const croco::Distance &distance = lNode.distances(i);
+            retj[i]["distances"][idx]["id"] = distance.id();
+            retj[i]["distances"][idx]["distance"] = distance.distance();
+        }
+
+        for (int idx = 0; idx < lNode.pivot_size(); idx++) {
+            retj[i]["pivot"][idx] = lNode.pivot(idx);
+        } // for (int idx = 0; idx < lNode.pivot_size(); idx++)
+    } // for (NGT::LeafNode *node : tree->leafNodes)
+
+    return retj.dump();
 }
 
 /**
@@ -157,9 +259,164 @@ void Index::getLeafNodeString(std::string* output)
  * @param std::string *output
  * @return void
  */
-void Index::getInternalNodeString(std::string* output)
+std::string Index::getInternalNodeJson()
 {
-    _internalNodeSpace.SerializeToString(output);
+    nlohmann::json retj;
+
+    for (int i = 0; i < _internalNodeSpace.nodes_size(); i++) {
+        const croco::InternalNodeSpace::InternalNode &iNode = _internalNodeSpace.nodes(i);
+
+        retj[i]["id"]     = iNode.id();
+        retj[i]["parent"] = iNode.parent();
+
+        for (int idx = 0; idx < iNode.pivot_size(); idx++) {
+            retj[i]["pivot"][idx] = iNode.pivot(idx);
+        } // for (int idx = 0; idx < lNode.pivot_size(); idx++)
+
+
+        for (int idx = 0; idx < iNode.children_size(); idx++) {
+            retj[i]["children"][idx] = iNode.children(idx);
+        }
+
+        for (int idx = 0; idx < iNode.borders_size(); idx++) {
+            retj[i]["borders"][idx] = iNode.borders(idx);
+        }
+    } // for (NGT::InternalNode *node : tree->internalNodes)
+
+    return retj.dump();
+}
+
+/**
+ * Get Object string
+ *
+ * @access public
+ * @param std::string *output
+ * @return void
+ */
+std::string Index::getObjectPbJson()
+{
+    std::string output;
+    google::protobuf::Message *msg = dynamic_cast<google::protobuf::Message *>(&_objectSpace);
+    google::protobuf::util::MessageToJsonString(*msg, &output);
+    return output;
+}
+
+/**
+ * Get Distance string
+ *
+ * @access public
+ * @param std::string *output
+ * @return void
+ */
+std::string Index::getDistancePbJson()
+{
+    std::string output;
+    google::protobuf::Message *msg = dynamic_cast<google::protobuf::Message *>(&_distanceSpace);
+    google::protobuf::util::MessageToJsonString(*msg, &output);
+    return output;
+}
+
+/**
+ * Get LeafNode string
+ *
+ * @access public
+ * @param std::string *output
+ * @return void
+ */
+std::string Index::getLeafNodePbJson()
+{
+    std::string output;
+    google::protobuf::Message *msg = dynamic_cast<google::protobuf::Message *>(&_leafNodeSpace);
+    google::protobuf::util::MessageToJsonString(*msg, &output);
+    return output;
+}
+
+/**
+ * Get InternalNode string
+ *
+ * @access public
+ * @param std::string *output
+ * @return void
+ */
+std::string Index::getInternalNodePbJson()
+{
+    std::string output;
+    google::protobuf::Message *msg = dynamic_cast<google::protobuf::Message *>(&_internalNodeSpace);
+    google::protobuf::util::MessageToJsonString(*msg, &output);
+    return output;
+}
+
+
+/**
+ * Get Object string
+ *
+ * @access public
+ * @param std::string *output
+ * @return void
+ */
+std::streambuf *Index::getObjectStreamBuf()
+{
+    std::string serialized;
+    _objectSpace.SerializeToString(&serialized);
+
+    return new membuf(
+        const_cast<char*>(serialized.data()),
+        serialized.size()
+    );
+}
+
+/**
+ * Get Distance string
+ *
+ * @access public
+ * @param std::string *output
+ * @return void
+ */
+std::streambuf *Index::getDistanceStreamBuf()
+{
+    std::string serialized;
+    _distanceSpace.SerializeToString(&serialized);
+
+    return new membuf(
+        const_cast<char*>(serialized.data()),
+        serialized.size()
+    );
+}
+
+/**
+ * Get LeafNode string
+ *
+ * @access public
+ * @param std::string *output
+ * @return void
+ */
+std::streambuf *Index::getLeafNodeStreamBuf()
+{
+    std::string serialized;
+    _leafNodeSpace.SerializeToString(&serialized);
+
+    return new membuf(
+        const_cast<char*>(serialized.data()),
+        serialized.size()
+    );
+}
+
+/**
+ * Get InternalNode string
+ *
+ * @access public
+ * @param std::string *output
+ * @return void
+ */
+std::streambuf *Index::getInternalNodeStreamBuf()
+{
+    std::string serialized;
+    _internalNodeSpace.SerializeToString(&serialized);
+
+    return new membuf(
+        const_cast<char*>(serialized.data()),
+        serialized.size()
+    );
 }
 
 /**
@@ -171,7 +428,7 @@ void Index::getInternalNodeString(std::string* output)
  */
 void Index::setObjectString(const std::string& data)
 {
-    _objectSpace.ParseFromString(data);
+    bool res = _objectSpace.ParseFromString(data);
 }
 
 /**
@@ -209,6 +466,61 @@ void Index::setInternalNodeString(const std::string& data)
 {
     _internalNodeSpace.ParseFromString(data);
 }
+
+
+/**
+ * Set Object string
+ *
+ * @access public
+ * @param std::string& data
+ * @return void
+ */
+void Index::setObjectPbJson(const std::string& json)
+{
+    google::protobuf::Message *msg = dynamic_cast<google::protobuf::Message *>(&_objectSpace);
+    google::protobuf::util::JsonStringToMessage(json, msg);
+}
+
+/**
+ * Set Distance string
+ *
+ * @access public
+ * @param std::string& data
+ * @return void
+ */
+void Index::setDistancePbJson(const std::string& json)
+{
+    google::protobuf::Message *msg = dynamic_cast<google::protobuf::Message *>(&_distanceSpace);
+    google::protobuf::util::JsonStringToMessage(json, msg);
+}
+
+/**
+ * Set LeafNode string
+ *
+ * @access public
+ * @param std::string& data
+ * @return void
+ */
+void Index::setLeafNodePbJson(const std::string& json)
+{
+    google::protobuf::Message *msg = dynamic_cast<google::protobuf::Message *>(&_leafNodeSpace);
+    google::protobuf::util::JsonStringToMessage(json, msg);
+}
+
+/**
+ * Set InternalNode string
+ *
+ * @access public
+ * @param std::string& data
+ * @return void
+ */
+void Index::setInternalNodePbJson(const std::string& json)
+{
+    google::protobuf::Message *msg = dynamic_cast<google::protobuf::Message *>(&_internalNodeSpace);
+    google::protobuf::util::JsonStringToMessage(json, msg);
+}
+
+
 
 /**
  * Add Object string

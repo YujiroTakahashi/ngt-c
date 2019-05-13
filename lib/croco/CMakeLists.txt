@@ -1,7 +1,7 @@
 find_package(Protobuf REQUIRED)
 protobuf_generate_cpp(NGT_PROTO_SRCS NGT_PROTO_HDRS repository.proto)
 
-message(STATUS ${PROTOBUF_LITE_LIBRARY})
+message(STATUS ${PROTOBUF_LIBRARY})
 
 file(GLOB NGT_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/*.cc)
 
@@ -12,7 +12,7 @@ set_target_properties(croco-ngt-static PROPERTIES OUTPUT_NAME croco_ngt)
 
 target_link_libraries(croco-ngt-shared
 	pthread
-	${PROTOBUF_LITE_LIBRARY}
+	${PROTOBUF_LIBRARY}
 	${ngt-shared}
 )
 

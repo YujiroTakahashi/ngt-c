@@ -140,7 +140,7 @@ void NgtExportIndex(NgtHandle handle)
 }
 
 /**
- * Get binary string of leaf node structure.
+ * Get binary string of object structure.
  *
  * @access public
  * @param  NgtHandle handle
@@ -150,13 +150,12 @@ NGTStr NgtGetObjectString(NgtHandle handle)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string output;
-    index->getObjectString(&output);
+    std::string output = index->getObjectString();
 
     NGTStr retval = new struct _NGTStr;
-    retval->len = output.length();
-    retval->buff = new char[retval->len + 1];
-    strcpy(retval->buff, output.c_str());
+    retval->len = output.size();
+    retval->buff = new char[retval->len];
+    memcpy(retval->buff, output.c_str(), retval->len);
 
     return retval;
 }
@@ -172,13 +171,12 @@ NGTStr NgtGetDistanceString(NgtHandle handle)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string output;
-    index->getDistanceString(&output);
+    std::string output = index->getDistanceString();
 
     NGTStr retval = new struct _NGTStr;
-    retval->len = output.length();
-    retval->buff = new char[retval->len + 1];
-    strcpy(retval->buff, output.c_str());
+    retval->len = output.size();
+    retval->buff = new char[retval->len];
+    memcpy(retval->buff, output.c_str(), retval->len);
 
     return retval;
 }
@@ -194,13 +192,12 @@ NGTStr NgtGetLeafNodeString(NgtHandle handle)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string output;
-    index->getLeafNodeString(&output);
+    std::string output = index->getLeafNodeString();
 
     NGTStr retval = new struct _NGTStr;
-    retval->len = output.length();
-    retval->buff = new char[retval->len + 1];
-    strcpy(retval->buff, output.c_str());
+    retval->len = output.size();
+    retval->buff = new char[retval->len];
+    memcpy(retval->buff, output.c_str(), retval->len);
 
     return retval;
 }
@@ -216,11 +213,94 @@ NGTStr NgtGetInternalNodeString(NgtHandle handle)
 {
     croco::Index *index = static_cast<croco::Index*>(handle);
 
-    std::string output;
-    index->getInternalNodeString(&output);
+    std::string output = index->getInternalNodeString();
 
     NGTStr retval = new struct _NGTStr;
-    retval->len = output.length();
+    retval->len = output.size();
+    retval->buff = new char[retval->len];
+    memcpy(retval->buff, output.c_str(), retval->len);
+
+    return retval;
+}
+
+/**
+ * Get json string of object structure.
+ *
+ * @access public
+ * @param  NgtHandle handle
+ * @return NGTStr
+ */
+NGTStr NgtGetObjectJson(NgtHandle handle)
+{
+    croco::Index *index = static_cast<croco::Index*>(handle);
+
+    std::string output = index->getObjectJson();
+
+    NGTStr retval = new struct _NGTStr;
+    retval->len = output.size();
+    retval->buff = new char[retval->len + 1];
+    strcpy(retval->buff, output.c_str());
+
+    return retval;
+}
+
+/**
+ * Get json string of distance structure.
+ *
+ * @access public
+ * @param  NgtHandle handle
+ * @return NGTStr
+ */
+NGTStr NgtGetDistanceJson(NgtHandle handle)
+{
+    croco::Index *index = static_cast<croco::Index*>(handle);
+
+    std::string output = index->getDistanceJson();
+
+    NGTStr retval = new struct _NGTStr;
+    retval->len = output.size();
+    retval->buff = new char[retval->len + 1];
+    strcpy(retval->buff, output.c_str());
+
+    return retval;
+}
+
+/**
+ * Get json string of leaf node structure.
+ *
+ * @access public
+ * @param  NgtHandle handle
+ * @return NGTStr
+ */
+NGTStr NgtGetLeafNodeJson(NgtHandle handle)
+{
+    croco::Index *index = static_cast<croco::Index*>(handle);
+
+    std::string output = index->getLeafNodeJson();
+
+    NGTStr retval = new struct _NGTStr;
+    retval->len = output.size();
+    retval->buff = new char[retval->len + 1];
+    strcpy(retval->buff, output.c_str());
+
+    return retval;
+}
+
+/**
+ * Get json string of internal node structure.
+ *
+ * @access public
+ * @param  NgtHandle handle
+ * @return NGTStr
+ */
+NGTStr NgtGetInternalNodeJson(NgtHandle handle)
+{
+    croco::Index *index = static_cast<croco::Index*>(handle);
+
+    std::string output = index->getInternalNodeJson();
+
+    NGTStr retval = new struct _NGTStr;
+    retval->len = output.size();
     retval->buff = new char[retval->len + 1];
     strcpy(retval->buff, output.c_str());
 
@@ -293,6 +373,74 @@ void NgtSetInternalNodeData(NgtHandle handle, const uint8_t* data, size_t size)
 
     std::string strdata(reinterpret_cast<const char *>(data), size);
     index->setInternalNodeString(strdata);
+}
+
+/**
+ * Set json data of object structure.
+ *
+ * @access public
+ * @param  NgtHandle handle
+ * @param  const char* json
+ * @param  size_t size
+ * @return void
+ */
+void NgtSetObjectJson(NgtHandle handle, const char* json, size_t size)
+{
+    croco::Index *index = static_cast<croco::Index*>(handle);
+
+    std::string input(json, size);
+    index->setObjectJson(input);
+}
+
+/**
+ * Set json data of distance structure.
+ *
+ * @access public
+ * @param  NgtHandle handle
+ * @param  const char* json
+ * @param  size_t size
+ * @return void
+ */
+void NgtSetDistanceJson(NgtHandle handle, const char* json, size_t size)
+{
+    croco::Index *index = static_cast<croco::Index*>(handle);
+
+    std::string input(json, size);
+    index->setDistanceJson(input);
+}
+
+/**
+ * Set json data of leaf node structure.
+ *
+ * @access public
+ * @param  NgtHandle handle
+ * @param  const char* json
+ * @param  size_t size
+ * @return void
+ */
+void NgtSetLeafNodeJson(NgtHandle handle, const char* json, size_t size)
+{
+    croco::Index *index = static_cast<croco::Index*>(handle);
+
+    std::string input(json, size);
+    index->setLeafNodeJson(input);
+}
+
+/**
+ * Set json data of internal node structure.
+ *
+ * @access public
+ * @param  NgtHandle handle
+ * @param  const char* json
+ * @param  size_t size
+ * @return void
+ */
+void NgtSetInternalNodeJson(NgtHandle handle, const char* json, size_t size)
+{
+    croco::Index *index = static_cast<croco::Index*>(handle);
+
+    std::string input(json, size);
+    index->setInternalNodeJson(input);
 }
 
 /**
