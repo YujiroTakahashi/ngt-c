@@ -5,7 +5,7 @@ ngt-c is wrapper for [NGT](https://github.com/yahoojapan/NGT).
 
 ## Requirements
 
-libngt
+[libngt](https://github.com/yahoojapan/NGT) 
 
 ```
 $ curl -fSL "https://github.com/yahoojapan/NGT/archive/v1.7.3.tar.gz" -o "ngt-1.7.3.tgz"
@@ -18,7 +18,7 @@ $ make -j $(nproc)
 $ sudo make install
 ```
 
-libprotobuf
+[libprotobuf](https://github.com/protocolbuffers/protobuf/)
 
 ```
 $ curl -fSL "https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protobuf-cpp-3.7.1.tar.gz" -o "protobuf-3.7.1.tgz"
