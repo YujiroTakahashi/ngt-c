@@ -8,12 +8,12 @@ ngt-c is wrapper for [NGT](https://github.com/yahoojapan/NGT).
 libngt
 
 ```
-$ curl -fSL "https://github.com/yahoojapan/NGT/archive/v1.7.1.tar.gz" -o "ngt-1.7.1.tgz"
-$ tar xf ngt-1.7.1.tgz
-$ cd NGT-1.7.1
+$ curl -fSL "https://github.com/yahoojapan/NGT/archive/v1.7.3.tar.gz" -o "ngt-1.7.3.tgz"
+$ tar xf ngt-1.7.3.tgz
+$ cd NGT-1.7.3
 $ mkdir build
 $ cd build
-$ cmake .. -DCMAKE_BUILD_TYPE=Release
+$ cmake .. -DNGT_AVX_DISABLED=ON -DCMAKE_BUILD_TYPE=Release
 $ make -j $(nproc)
 $ sudo make install
 ```
