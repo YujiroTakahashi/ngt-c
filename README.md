@@ -45,6 +45,7 @@ $ sudo ldconfig
 ## API synopsis
 
 ```c
+NGT_API int NgtVersion();
 NGT_API int NgtSize();
 NGT_API NgtHandle NgtCreate();
 NGT_API void NgtFree(NgtHandle handle);
@@ -59,22 +60,16 @@ NGT_API void NgtCreateDB(
 );
 NGT_API int NgtEmptyIndex(NgtHandle handle);
 NGT_API int NgtGetDimension(NgtHandle handle);
-
 NGT_API void NgtExportIndex(NgtHandle handle);
 NGT_API NGTStr NgtGetObjectString(NgtHandle handle);
 NGT_API NGTStr NgtGetDistanceString(NgtHandle handle);
 NGT_API NGTStr NgtGetLeafNodeString(NgtHandle handle);
 NGT_API NGTStr NgtGetInternalNodeString(NgtHandle handle);
-NGT_API void NgtSetObjectString(NgtHandle handle, const char* data);
-NGT_API void NgtSetDistanceString(NgtHandle handle, const char* data);
-NGT_API void NgtSetLeafNodeString(NgtHandle handle, const char* data);
-NGT_API void NgtSetInternalNodeString(NgtHandle handle, const char* data);
-NGT_API void NgtAddObjectString(NgtHandle handle, const char* data);
-NGT_API void NgtAddDistanceString(NgtHandle handle, const char* data);
-NGT_API void NgtAddLeafNodeString(NgtHandle handle, const char* data);
-NGT_API void NgtAddInternalNodeString(NgtHandle handle, const char* data);
+NGT_API void NgtSetObjectString(NgtHandle handle, const char* data, size_t size);
+NGT_API void NgtSetDistanceString(NgtHandle handle, const char* data, size_t size);
+NGT_API void NgtSetLeafNodeString(NgtHandle handle, const char* data, size_t size);
+NGT_API void NgtSetInternalNodeString(NgtHandle handle, const char* data, size_t size);
 NGT_API void NgtImportIndex(NgtHandle handle);
-
 NGT_API void NgtInsert(
     NgtHandle handle, 
     const char* json, size_t len,
