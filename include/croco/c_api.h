@@ -49,30 +49,16 @@ NGT_API void NgtCreateDB(
 );
 NGT_API int NgtEmptyIndex(NgtHandle handle);
 NGT_API int NgtGetDimension(NgtHandle handle);
-
 NGT_API void NgtExportIndex(NgtHandle handle);
 NGT_API NGTStr NgtGetObjectString(NgtHandle handle);
 NGT_API NGTStr NgtGetDistanceString(NgtHandle handle);
 NGT_API NGTStr NgtGetLeafNodeString(NgtHandle handle);
 NGT_API NGTStr NgtGetInternalNodeString(NgtHandle handle);
-NGT_API NGTStr NgtGetObjectJson(NgtHandle handle);
-NGT_API NGTStr NgtGetDistanceJson(NgtHandle handle);
-NGT_API NGTStr NgtGetLeafNodeJson(NgtHandle handle);
-NGT_API NGTStr NgtGetInternalNodeJson(NgtHandle handle);
-NGT_API void NgtSetObjectData(NgtHandle handle, const uint8_t* data, size_t size);
-NGT_API void NgtSetDistanceData(NgtHandle handle, const uint8_t* data, size_t size);
-NGT_API void NgtSetLeafNodeData(NgtHandle handle, const uint8_t* data, size_t size);
-NGT_API void NgtSetInternalNodeData(NgtHandle handle, const uint8_t* data, size_t size);
-NGT_API void NgtSetObjectJson(NgtHandle handle, const char* json, size_t size);
-NGT_API void NgtSetDistanceJson(NgtHandle handle, const char* json, size_t size);
-NGT_API void NgtSetLeafNodeJson(NgtHandle handle, const char* json, size_t size);
-NGT_API void NgtSetInternalNodeJson(NgtHandle handle, const char* json, size_t size);
-NGT_API void NgtAddObjectData(NgtHandle handle, const uint8_t* data, size_t size);
-NGT_API void NgtAddDistanceData(NgtHandle handle, const uint8_t* data, size_t size);
-NGT_API void NgtAddLeafNodeData(NgtHandle handle, const uint8_t* data, size_t size);
-NGT_API void NgtAddInternalNodeData(NgtHandle handle, const uint8_t* data, size_t size);
+NGT_API void NgtSetObjectString(NgtHandle handle, const char* data, size_t size);
+NGT_API void NgtSetDistanceString(NgtHandle handle, const char* data, size_t size);
+NGT_API void NgtSetLeafNodeString(NgtHandle handle, const char* data, size_t size);
+NGT_API void NgtSetInternalNodeString(NgtHandle handle, const char* data, size_t size);
 NGT_API void NgtImportIndex(NgtHandle handle);
-
 NGT_API void NgtInsert(
     NgtHandle handle, 
     const char* json, size_t len,

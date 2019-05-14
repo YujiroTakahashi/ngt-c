@@ -80,26 +80,22 @@ int main(int argc, char **argv)
     index.exportIndex();
     {
         std::ofstream ostrm("index/obj.dat", std::ios::binary);
-        std::string output;
-        index.getObjectString(&output);
+        std::string output = index.getObjectString();
         ostrm.write(output.c_str(), output.size());
     }
     {
         std::ofstream ostrm("index/dist.dat", std::ios::binary);
-        std::string output;
-        index.getDistanceString(&output);
+        std::string output = index.getDistanceString();
         ostrm.write(output.c_str(), output.size());
     }
     {
         std::ofstream ostrm("index/leaf.dat", std::ios::binary);
-        std::string output;
-        index.getLeafNodeString(&output);
+        std::string output = index.getLeafNodeString();
         ostrm.write(output.c_str(), output.size());
     }
     {
         std::ofstream ostrm("index/internal.dat", std::ios::binary);
-        std::string output;
-        index.getInternalNodeString(&output);
+        std::string output = index.getInternalNodeString();
         ostrm.write(output.c_str(), output.size());
     }
 

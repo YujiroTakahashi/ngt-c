@@ -32,25 +32,38 @@ int main(int argc, char **argv)
         sql::ResultSet *res = pstmt->getResultSet();
 
         while (res->next()) {
-            { 
-                sql::SQLString str = res->getString("objects");                
-                std::string input(str);
-                index.setObjectJson(input);
+            {
+                std::istream *blb = res->getBlob("objects");
+                
+                std::string input(
+                    (std::istreambuf_iterator<char>(*blb)), 
+                    std::istreambuf_iterator<char>()
+                );
+                index.setObjectString(input);
             }
             {
-                sql::SQLString str = res->getString("distances");
-                std::string input(str);
-                index.setDistanceJson(input);
+                std::istream *blb = res->getBlob("distances");
+                std::string input(
+                    (std::istreambuf_iterator<char>(*blb)), 
+                    std::istreambuf_iterator<char>()
+                );
+                index.setDistanceString(input);
             }
             {
-                sql::SQLString str = res->getString("leafNodes");
-                std::string input(str);
-                index.setLeafNodeJson(input);
+                std::istream *blb = res->getBlob("leafNodes");
+                std::string input(
+                    (std::istreambuf_iterator<char>(*blb)), 
+                    std::istreambuf_iterator<char>()
+                );
+                index.setLeafNodeString(input);
             }
             {
-                sql::SQLString str = res->getString("internalNodes");
-                std::string input(str);
-                index.setInternalNodeJson(input);
+                std::istream *blb = res->getBlob("internalNodes");
+                std::string input(
+                    (std::istreambuf_iterator<char>(*blb)), 
+                    std::istreambuf_iterator<char>()
+                );
+                index.setInternalNodeString(input);
             }
         }
         index.importIndex();

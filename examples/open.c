@@ -4,21 +4,21 @@
 #include <croco/ngt/c_api.h>
 
 
-uint8_t *getData(const char *filename, int *size)
+char *getData(const char *filename, int *size)
 {
     FILE *fp = fopen(filename, "rb");
     struct stat stbuf;
-    uint8_t *input;
+    char *input;
     int ch, idx = 0;
 
     stat(filename, &stbuf);
-    input = (uint8_t *)malloc(sizeof(uint8_t) * stbuf.st_size);
+    input = (char *)malloc(sizeof(char) * stbuf.st_size);
 
     *size = (int)stbuf.st_size;
 
     fseek(fp, 0L, SEEK_SET);
     while ((ch = getc(fp)) != EOF) {
-        input[idx] = (uint8_t)ch;
+        input[idx] = ch;
         idx++;
     }
 
@@ -39,30 +39,28 @@ int main(int argc, char **argv)
 
     {
         int size;
-        uint8_t *input = getData("index/obj.dat", &size);
-        NgtSetObjectData(index, input, size);
+        char *input = getData("index/obj.dat", &size);
+        NgtSetObjectString(index, input, size);
         free(input);
     }
     {
         int size;
-        uint8_t *input = getData("index/dist.dat", &size);
-        NgtSetDistanceData(index, input, size);
+        char *input = getData("index/dist.dat", &size);
+        NgtSetDistanceString(index, input, size);
         free(input);
     }
     {
         int size;
-        uint8_t *input = getData("index/leaf.dat", &size);
-        NgtSetLeafNodeData(index, input, size);
+        char *input = getData("index/leaf.dat", &size);
+        NgtSetLeafNodeString(index, input, size);
         free(input);
     }
-#if 1
     {
         int size;
-        uint8_t *input = getData("index/internal.dat", &size);
-        NgtSetLeafNodeData(index, input, size);
+        char *input = getData("index/internal.dat", &size);
+        NgtSetLeafNodeString(index, input, size);
         free(input);
     }
-#endif
     NgtImportIndex(index);
 
 

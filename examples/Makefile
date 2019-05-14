@@ -12,8 +12,6 @@ all: main.cc
 	$(CXX) $(INCLUDES) $(CXXFLAGS) open.cc -o open_ngt $(LDFLAGS)
 	$(CXX) $(INCLUDES) $(CXXFLAGS) import.cc -o import_ngt -lmysqlcppconn $(LDFLAGS)
 	$(CXX) $(INCLUDES) $(CXXFLAGS) export.cc -o export_ngt -lmysqlcppconn $(LDFLAGS)
-	$(CXX) $(INCLUDES) $(CXXFLAGS) getmsg.cc -o getmsg_ngt -lmysqlcppconn $(LDFLAGS)
-	$(CXX) $(INCLUDES) $(CXXFLAGS) setmsg.cc -o setmsg_ngt -lmysqlcppconn $(LDFLAGS)
 
 	$(CC) $(INCLUDES) $(CFLAGS) main.c -o c_ngt -lstdc++ $(LDFLAGS)
 	$(CC) $(INCLUDES) $(CFLAGS) open.c -o c_open -lstdc++ $(LDFLAGS)

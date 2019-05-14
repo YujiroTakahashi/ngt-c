@@ -103,17 +103,25 @@ int main(int argc, char **argv)
 
         sql::PreparedStatement *pstmt = con->prepareStatement("INSERT INTO `index` (`objects`, `distances`, `leafNodes`, `internalNodes`)VALUES(?, ?, ?, ?)");
         
-        std::string objbuf = index.getObjectJson();
-        pstmt->setString(1, objbuf.c_str());
+        std::string objstr = index.getObjectString();
+        membuf objbuf(const_cast<char*>(objstr.data()), objstr.size());
+        std::istream objblob(&objbuf);
+        pstmt->setBlob(1, &objblob);
 
-        std::string dstbuf = index.getDistanceJson();
-        pstmt->setString(2, dstbuf.c_str());
+        std::string dststr = index.getDistanceString();
+        membuf dstbuf(const_cast<char*>(dststr.data()), dststr.size());
+        std::istream dstblob(&dstbuf);
+        pstmt->setBlob(2, &dstblob);
 
-        std::string lefbuf = index.getLeafNodeJson();
-        pstmt->setString(3, lefbuf.c_str());
+        std::string lefstr = index.getLeafNodeString();
+        membuf lefbuf(const_cast<char*>(lefstr.data()), lefstr.size());
+        std::istream lefblob(&lefbuf);
+        pstmt->setBlob(3, &lefblob);
 
-        std::string itrbuf = index.getInternalNodeJson();
-        pstmt->setString(4, itrbuf.c_str());
+        std::string itrstr = index.getInternalNodeString();
+        membuf itrbuf(const_cast<char*>(itrstr.data()), itrstr.size());
+        std::istream itrblob(&itrbuf);
+        pstmt->setBlob(4, &itrblob);
 
         pstmt->execute();
     } catch (sql::SQLException e) {

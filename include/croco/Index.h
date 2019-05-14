@@ -29,47 +29,14 @@ public:
     bool emptyIndex();
     int getDimension();
     void exportIndex();
-
     std::string getObjectString();
     std::string getDistanceString();
     std::string getLeafNodeString();
     std::string getInternalNodeString();
-
-    std::string getObjectJson();
-    std::string getDistanceJson();
-    std::string getLeafNodeJson();
-    std::string getInternalNodeJson();
-
-    std::string getObjectPbJson();
-    std::string getDistancePbJson();
-    std::string getLeafNodePbJson();
-    std::string getInternalNodePbJson();
-
-    std::streambuf *getObjectStreamBuf();
-    std::streambuf *getDistanceStreamBuf();
-    std::streambuf *getLeafNodeStreamBuf();
-    std::streambuf *getInternalNodeStreamBuf();
-
     void setObjectString(const std::string& data);
     void setDistanceString(const std::string& data);
     void setLeafNodeString(const std::string& data);
     void setInternalNodeString(const std::string& data);
-
-    void setObjectPbJson(const std::string& json);
-    void setDistancePbJson(const std::string& json);
-    void setLeafNodePbJson(const std::string& json);
-    void setInternalNodePbJson(const std::string& json);
-
-    void setObjectJson(const std::string& json);
-    void setDistanceJson(const std::string& json);
-    void setLeafNodeJson(const std::string& json);
-    void setInternalNodeJson(const std::string& json);
-
-    void addObjectData(const uint8_t *data, size_t size);
-    void addDistanceData(const uint8_t *data, size_t size);
-    void addLeafNodeData(const uint8_t *data, size_t size);
-    void addInternalNodeData(const uint8_t *data, size_t size);
-
     void importIndex();
     void batchInsert(std::vector<float> data, std::size_t objectCount = 1, std::size_t numThreads = 8);
     int insert(std::vector<float> data);
